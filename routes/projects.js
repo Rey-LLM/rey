@@ -98,7 +98,20 @@ router.post('/', [
 });
 
 // Обновить проект
-router.put('/:projectId', async (req, res) => {
+router.put('/:projectId', [
+  body('name').optional().trim().isLength({ min: 3 }).withMessage('Project name must be at least 3 characters'),
+  body('description').optional().trim(),
+  body('category').optional().isIn(['development', 'design', 'marketing', 'sales', 'support', 'other']),
+  body('status').optional().isIn(['planning', 'active', 'paused', 'completed', 'archived']),
+  body('priority').optional().isIn(['low', 'medium', 'high', 'critical']),
+  body('startDate').optional().isISO8601(),
+  body('dueDate').optional().isISO8601()
+], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   try {
     const project = await Project.findById(req.params.projectId);
 

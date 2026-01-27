@@ -10,6 +10,7 @@ import authRoutes from './routes/auth.js';
 import projectRoutes from './routes/projects.js';
 import taskRoutes from './routes/tasks.js';
 import userRoutes from './routes/users.js';
+import documentRoutes from './routes/documents.js';
 
 // Импорт middleware
 import { authenticateToken } from './middleware/auth.js';
@@ -42,6 +43,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/projects', authenticateToken, projectRoutes);
 app.use('/api/tasks', authenticateToken, taskRoutes);
 app.use('/api/users', authenticateToken, userRoutes);
+app.use('/api/documents', authenticateToken, documentRoutes);
 
 // Здоровье приложения
 app.get('/api/health', (req, res) => {

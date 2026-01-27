@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ProjectsList from './components/ProjectsList';
 import ProjectDetail from './pages/ProjectDetail';
+import DocumentsList from './pages/DocumentsList';
 
 function PrivateRoute({ children }) {
   const { user, isLoading } = useAuth();
@@ -60,6 +61,11 @@ function AppContent() {
         <Route path="/projects/:id" element={
           <PrivateRoute>
             <ProjectDetail />
+          </PrivateRoute>
+        } />
+        <Route path="/documents" element={
+          <PrivateRoute>
+            <DocumentsList />
           </PrivateRoute>
         } />
         <Route path="/" element={<Navigate to="/projects" />} />
