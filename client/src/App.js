@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './AuthContext';
 import Navbar from './components/Navbar';
+import BreakReminder from './components/BreakReminder';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ProjectsList from './components/ProjectsList';
@@ -42,6 +43,7 @@ function AppContent() {
   return (
     <>
       {user && <Navbar />}
+      {user && <BreakReminder />}
       <Routes>
         <Route path="/login" element={
           <PublicRoute>
