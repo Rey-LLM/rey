@@ -5,14 +5,18 @@ import dotenv from 'dotenv';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 
-// Импорт маршрутов
+// Last updated: 2026-02-12
+// New features: Archive export/import, Project overview endpoint
+
+// Import routes
 import authRoutes from './routes/auth.js';
 import projectRoutes from './routes/projects.js';
 import taskRoutes from './routes/tasks.js';
 import userRoutes from './routes/users.js';
 import documentRoutes from './routes/documents.js';
+import archiveRoutes from './routes/archives.js';
 
-// Импорт middleware
+// Import middleware
 import { authenticateToken } from './middleware/auth.js';
 
 dotenv.config();
@@ -31,26 +35,27 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Подключение к MongoDB
+// Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/project-manager')
   .then(() => console.log('✓ Connected to MongoDB'))
   .catch(err => console.error('✗ MongoDB connection error:', err));
 
-// Публичные маршруты
+// Public routes
 app.use('/api/auth', authRoutes);
 
-// Защищённые маршруты
+// Protected routes
 app.use('/api/projects', authenticateToken, projectRoutes);
 app.use('/api/tasks', authenticateToken, taskRoutes);
 app.use('/api/users', authenticateToken, userRoutes);
 app.use('/api/documents', authenticateToken, documentRoutes);
+app.use('/api/archives', authenticateToken, archiveRoutes);
 
-// Здоровье приложения
+// Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date() });
 });
 
-// WebSocket события
+// WebSocket events
 io.on('connection', (socket) => {
   console.log('New user connected:', socket.id);
 
@@ -73,7 +78,7 @@ io.on('connection', (socket) => {
   });
 });
 
-// Обработка ошибок
+// Error handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500).json({

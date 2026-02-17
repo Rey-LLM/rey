@@ -58,7 +58,31 @@ cd /workspaces/rey/client && npm start
 ✅ **User Profile** - Manage user settings and preferences  
 ✅ **Document Viewing** - Browse all documents organized by folders  
 ✅ **Search & Filter** - Full-text search across documents  
+✅ **Archive Export/Import** - Export projects to ZIP, import archives, inspect contents  
+✅ **Project Overview** - Dashboard statistics for all projects  
 ✅ **20+ API Endpoints** - Comprehensive REST API
+
+---
+
+## 🆕 Latest Updates (v1.1.0 - Feb 2026)
+
+### New Features Added:
+- **Archive Management** (`/api/archives`)
+  - Export project to ZIP archive
+  - Export all projects to single ZIP
+  - Inspect archive contents (like WinRAR)
+  - Import ZIP archive to project
+  
+- **Project Overview** (`/api/projects/overview`)
+  - Total projects count
+  - Total tasks count
+  - Tasks by status breakdown
+  - High priority tasks count
+  - Overdue tasks count
+
+### Dependencies Added:
+- `archiver` - For creating ZIP archives
+- `unzipper` - For reading ZIP archives
 
 ---
 
@@ -150,6 +174,15 @@ rey/
 - `GET /api/documents` - Get all documents
 - `GET /api/documents/project/:projectId` - Get project documents
 - `GET /api/documents/categories/list` - Get document categories
+
+### Archives (NEW in v1.1.0)
+- `GET /api/archives/project/:projectId/export` - Export project to ZIP
+- `GET /api/archives/export-all` - Export all projects to ZIP
+- `POST /api/archives/inspect` - Inspect ZIP archive contents
+- `POST /api/archives/project/:projectId/import` - Import ZIP to project
+
+### Project Overview (NEW in v1.1.0)
+- `GET /api/projects/overview` - Get dashboard statistics
 
 ---
 

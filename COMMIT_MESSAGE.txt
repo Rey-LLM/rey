@@ -1,0 +1,5 @@
+feat: Add archive export/import and project overview features
+
+Added new archive management system with ZIP export/import functionality.
+Added project overview endpoint for dashboard statistics.
+Updated version to 1.1.0.
